@@ -1,0 +1,7 @@
+# Don't register with IPS Registry services
+
+eureka.client.enabled: false
+
+backbase:
+  events:
+    enabled: false
