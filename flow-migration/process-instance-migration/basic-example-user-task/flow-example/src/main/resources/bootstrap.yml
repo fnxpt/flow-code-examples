@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: simple-flow
+
+server:
+  port : 5600
