@@ -26,7 +26,7 @@ public class SimpleStepHandler implements ActionHandler<CaseDefinition, SimpleSt
 
         interactionContext.saveCaseData(simpleCaseDefinition);
 
-        String processId = interactionContext.startProcess(interactionContext.getCaseKey(), "simple-process");
+        String processId = interactionContext.startProcess(interactionContext.getCaseKey(), "send-personal-message");
 
         simpleCaseDefinition.setStartedProcess(true);
 
