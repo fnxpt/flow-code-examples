@@ -10,11 +10,11 @@
       <bpmn:outgoing>SequenceFlow1</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:endEvent id="end_event_send_message" name="Personal Message Sent">
-      <bpmn:incoming>SequenceFlow_1xo5oma</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_13kgjwo</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow1" sourceRef="start_event_send_message" targetRef="service_task_select_department" />
     <bpmn:sequenceFlow id="SequenceFlow_18o7zqy" sourceRef="service_task_select_department" targetRef="ExclusiveGateway_Department_Split" />
-    <bpmn:serviceTask id="service_task_select_department" name="Select Department" camunda:delegateExpression="#{selectDepartment}">
+    <bpmn:serviceTask id="service_task_select_department" name="Select Department" camunda:expression="${departmentSelectorService.selectDepartment (execution)}">
       <bpmn:incoming>SequenceFlow1</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_18o7zqy</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -53,8 +53,7 @@
       <bpmn:incoming>Flow_05xtx0k</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_13kgjwo</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_13kgjwo" sourceRef="ExclusiveGateway_Department_Merge" targetRef="service_task_send_personal_message" />
-    <bpmn:sequenceFlow id="SequenceFlow_1xo5oma" sourceRef="service_task_send_personal_message" targetRef="end_event_send_message" />
+    <bpmn:sequenceFlow id="SequenceFlow_13kgjwo" sourceRef="ExclusiveGateway_Department_Merge" targetRef="end_event_send_message" />
     <bpmn:userTask id="user_task_message_finance" name="Create Message from Finance">
       <bpmn:incoming>SequenceFlow_14cynn5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_09foba9</bpmn:outgoing>
@@ -68,10 +67,6 @@
     <bpmn:sequenceFlow id="Flow_1oc1a7h" sourceRef="ExclusiveGateway_Department_Split" targetRef="ExclusiveGateway_Department_Merge">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{person=="Mary"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sendTask id="service_task_send_personal_message" name="Send Personal Message" camunda:type="external" camunda:topic="send_personal_message">
-      <bpmn:incoming>SequenceFlow_13kgjwo</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1xo5oma</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:userTask id="user_task_message_it" name="Create Message from IT">
       <bpmn:incoming>Flow_0wnz11n</bpmn:incoming>
       <bpmn:outgoing>Flow_05xtx0k</bpmn:outgoing>
@@ -117,13 +112,9 @@
           <dc:Bounds x="534" y="363" width="24" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_1xo5oma_di" bpmnElement="SequenceFlow_1xo5oma">
-        <di:waypoint x="1040" y="120" />
-        <di:waypoint x="1102" y="120" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_13kgjwo_di" bpmnElement="SequenceFlow_13kgjwo">
         <di:waypoint x="845" y="120" />
-        <di:waypoint x="940" y="120" />
+        <di:waypoint x="1012" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_09foba9_di" bpmnElement="SequenceFlow_09foba9">
         <di:waypoint x="690" y="120" />
@@ -169,12 +160,6 @@
           <dc:Bounds x="154" y="144" width="73" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0fkea3f_di" bpmnElement="end_event_send_message">
-        <dc:Bounds x="1102" y="102" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1085" y="150" width="71" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ServiceTask_16vok30_di" bpmnElement="service_task_select_department">
         <dc:Bounds x="280" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -193,11 +178,14 @@
       <bpmndi:BPMNShape id="UserTask_1k806rr_di" bpmnElement="user_task_message_finance">
         <dc:Bounds x="590" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0ilavyx_di" bpmnElement="service_task_send_personal_message">
-        <dc:Bounds x="940" y="80" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1mw5r07_di" bpmnElement="user_task_message_it">
         <dc:Bounds x="590" y="350" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0fkea3f_di" bpmnElement="end_event_send_message">
+        <dc:Bounds x="1012" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="995" y="150" width="71" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
