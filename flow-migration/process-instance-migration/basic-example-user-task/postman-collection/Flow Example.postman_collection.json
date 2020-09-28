@@ -1,0 +1,195 @@
+{
+	"info": {
+		"_postman_id": "5f87fa56-a7c6-4a26-8607-1bb5acd4932f",
+		"name": "Flow Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Gateway",
+			"item": [
+				{
+					"name": "Login as User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "30e6790f-a460-4efa-af38-892b68c0aff2",
+								"exec": [
+									"var csrfTokenValue = postman.getResponseCookie(\"XSRF-TOKEN\").value;",
+									"postman.setEnvironmentVariable(\"csrfTokenValue\", csrfTokenValue);",
+									"var jwtToken = postman.getResponseCookie(\"Authorization\").value;",
+									"postman.setEnvironmentVariable(\"jwtToken\", jwtToken);",
+									"tests[\"Status code is 200\"] = (responseCode.code === 200);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "user",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "user",
+									"type": "text"
+								},
+								{
+									"key": "submit",
+									"value": "Login",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "{{gateway-url}}/api/auth/login",
+							"host": [
+								"{{gateway-url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login to Gateway as user"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Flow Application",
+			"item": [
+				{
+					"name": "Submit Simple Step",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d0d59312-63ae-486a-b89a-1c9bc790a169",
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"interaction-id\", response.interactionId);",
+									"postman.setEnvironmentVariable(\"resume-code\", response.resumeCode);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "anonymousUserId={{cookieAnonValue}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"payload\": {\n\t\t\"firstName\": \"Harry\",\n\t\t\"lastName\": \"Potter\",\n\t\t\"dateOfBirth\": \"1990-01-01\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{interaction-actions-url}}/simple-step-handler",
+							"host": [
+								"{{interaction-actions-url}}"
+							],
+							"path": [
+								"simple-step-handler"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Migration Application",
+			"item": [
+				{
+					"name": "Migrate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "40335ba7-58c6-4565-b462-fbf8b85de5e2",
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"interaction-id\", response.interactionId);",
+									"postman.setEnvironmentVariable(\"resume-code\", response.resumeCode);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "anonymousUserId={{cookieAnonValue}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"payload\": {\n\t\t\"firstName\": \"Harry\",\n\t\t\"lastName\": \"Potter\",\n\t\t\"dateOfBirth\": \"1990-01-01\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "localhost:9091/migrate",
+							"host": [
+								"localhost"
+							],
+							"port": "9091",
+							"path": [
+								"migrate"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Interactions ensure that the right questions, steps and experiences are rendered real-time based on the customer input and the device the customer is using. The Interactions aim for a seamless experience.",
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
