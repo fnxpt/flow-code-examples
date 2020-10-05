@@ -24,6 +24,7 @@ migration:
   targetDefinition:
       key: "send-personal-message"
       version: "1.1.0"
+  updateEventTriggers: false
   skipIoMappings: false
   skipCustomListeners: false
 

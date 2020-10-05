@@ -2,6 +2,7 @@ package com.backbase.flow.examples.migration;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.batch.Batch;
+import org.camunda.bpm.engine.migration.MigrationInstructionsBuilder;
 import org.camunda.bpm.engine.migration.MigrationPlan;
 import org.camunda.bpm.engine.migration.MigrationPlanExecutionBuilder;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
@@ -52,10 +53,25 @@ public class MigrationPlanService {
                 .versionTag(configuration.getTargetDefinition().getVersion())
                 .singleResult();
 
-        MigrationPlan migrationPlan = processEngine.getRuntimeService()
+        MigrationInstructionsBuilder instructionsBuilder = processEngine.getRuntimeService()
                 .createMigrationPlan(sourcedef.getId(), targetdef.getId())
-                .mapEqualActivities()
-                .build();
+                .mapEqualActivities();
+
+        if (configuration.isUpdateEventTriggers()) {
+            instructionsBuilder.updateEventTriggers();
+        }
+
+        if (configuration.getActivities().size() > 0) {
+            for (MigrationProperties.BreakingActivity activity : configuration.getActivities()) {
+                if (activity.isUpdateEventTrigger()) {
+                    instructionsBuilder.mapActivities(activity.getSource(), activity.getTarget()).updateEventTrigger();
+                } else {
+                    instructionsBuilder.mapActivities(activity.getSource(), activity.getTarget());
+                }
+            }
+        }
+
+        MigrationPlan migrationPlan = instructionsBuilder.build();
 
         ProcessInstanceQuery processInstanceQuery = processEngine.getRuntimeService()
                 .createProcessInstanceQuery()
