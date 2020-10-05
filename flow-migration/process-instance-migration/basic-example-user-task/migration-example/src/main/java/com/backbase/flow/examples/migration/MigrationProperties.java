@@ -18,7 +18,8 @@ public class MigrationProperties {
 
     private ProcessDefinition sourceDefinition;
     private ProcessDefinition targetDefinition;
-    //private List<Activities> activities = new ArrayList<>();
+    private List<BreakingActivity> activities = new ArrayList<>();
+    private boolean updateEventTriggers;
     private boolean skipIoMappings;
     private boolean skipCustomListeners;
 
@@ -29,6 +30,12 @@ public class MigrationProperties {
         private String version;
     }
 
-
+    @Getter
+    @Setter
+    public static class BreakingActivity {
+        private String source;
+        private String target;
+        private boolean updateEventTrigger;
+    }
 
 }
