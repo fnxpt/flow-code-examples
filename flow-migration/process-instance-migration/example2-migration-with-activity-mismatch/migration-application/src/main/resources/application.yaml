@@ -1,0 +1,33 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/order-pizza-flow
+    username: root
+    password: root
+camunda:
+  bpm:
+    admin-user:
+      id: demo
+      password: demo
+    filter:
+      create: All Tasks
+    database:
+      type: mysql
+server:
+  port: 9091
+migration:
+  sourceDefinition:
+    key: "order-pizza"
+    version: "1.0.0"
+  targetDefinition:
+    key: "order-pizza"
+    version: "1.1.0"
+  updateEventTriggers: false
+  activities:
+    - source: "user_task_call_local_franchise"
+      target: "user_task_call_customer_complaints"
+      updateEventTrigger: false
+  skipIoMappings: false
+  skipCustomListeners: false

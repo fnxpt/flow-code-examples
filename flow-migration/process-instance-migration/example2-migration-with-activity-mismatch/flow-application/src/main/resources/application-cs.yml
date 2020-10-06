@@ -1,0 +1,9 @@
+# This enables the use of CXS Content Services
+backbase.flow.storage:
+  impl: cs
+  cs:
+    repository:
+      id: simpleDocumentStorage
+      name: Simple Document Storage
+      description: Simple document store private repository.
+    targetPath: /
