@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.1.1">
+  <bpmn:message id="Message_1dqe926" name="Message_Wait_For_Pizza" />
+  <bpmn:process id="order-pizza" name="Order Pizza" isExecutable="true" camunda:versionTag="1.1.0">
+    <bpmn:sequenceFlow id="Flow_0sp8qi4" sourceRef="boundary_timer_event_5min" targetRef="user_task_call_customer_complaints" />
+    <bpmn:sequenceFlow id="Flow_0el2bha" sourceRef="user_task_eat_pizza" targetRef="end_event_pizza_finished" />
+    <bpmn:sequenceFlow id="Flow_1a8zoy5" name="Pizza Arrived" sourceRef="receive_task_wait_for_pizza" targetRef="user_task_eat_pizza" />
+    <bpmn:sequenceFlow id="Flow_12c82k2" sourceRef="service_task_order_pizza_online" targetRef="receive_task_wait_for_pizza" />
+    <bpmn:sequenceFlow id="Flow_1dw484a" sourceRef="start_event_order_pizza" targetRef="service_task_order_pizza_online" />
+    <bpmn:boundaryEvent id="boundary_timer_event_5min" name="5 minutes" attachedToRef="receive_task_wait_for_pizza">
+      <bpmn:outgoing>Flow_0sp8qi4</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1y2koc3">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:serviceTask id="service_task_order_pizza_online" name="Order Pizza Online" camunda:expression="${orderPizzaOnlineService.orderPizza (execution)}">
+      <bpmn:incoming>Flow_1dw484a</bpmn:incoming>
+      <bpmn:outgoing>Flow_12c82k2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="user_task_eat_pizza" name="Eat Pizza">
+      <bpmn:incoming>Flow_1a8zoy5</bpmn:incoming>
+      <bpmn:incoming>Flow_05grkl0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0el2bha</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="end_event_pizza_finished" name="Pizza&#10;Finished">
+      <bpmn:incoming>Flow_0el2bha</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:receiveTask id="receive_task_wait_for_pizza" name="Wait for Pizza" messageRef="Message_1dqe926">
+      <bpmn:incoming>Flow_12c82k2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1a8zoy5</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:startEvent id="start_event_order_pizza" name="Order Pizza">
+      <bpmn:extensionElements>
+        <camunda:properties>
+          <camunda:property name="simNextFire" value="${g.timesPerDay(&#34;processStarted&#34;,&#34;02:00&#34;,&#34;22:00&#34;, 77)}" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1dw484a</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="user_task_call_customer_complaints" name="Call Customer Complaints">
+      <bpmn:incoming>Flow_0sp8qi4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0o55h2m</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0o55h2m" sourceRef="user_task_call_customer_complaints" targetRef="receive_task_wait_for_free_pizza" />
+    <bpmn:receiveTask id="receive_task_wait_for_free_pizza" name="Wait for&#10;Free Pizza">
+      <bpmn:incoming>Flow_0o55h2m</bpmn:incoming>
+      <bpmn:outgoing>Flow_05grkl0</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:sequenceFlow id="Flow_05grkl0" name="Pizza Arived" sourceRef="receive_task_wait_for_free_pizza" targetRef="user_task_eat_pizza" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="order-pizza">
+      <bpmndi:BPMNEdge id="Flow_05grkl0_di" bpmnElement="Flow_05grkl0">
+        <di:waypoint x="860" y="250" />
+        <di:waypoint x="860" y="160" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="869" y="202" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0o55h2m_di" bpmnElement="Flow_0o55h2m">
+        <di:waypoint x="730" y="290" />
+        <di:waypoint x="810" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dw484a_di" bpmnElement="Flow_1dw484a">
+        <di:waypoint x="209" y="120" />
+        <di:waypoint x="287" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12c82k2_di" bpmnElement="Flow_12c82k2">
+        <di:waypoint x="387" y="120" />
+        <di:waypoint x="460" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1a8zoy5_di" bpmnElement="Flow_1a8zoy5">
+        <di:waypoint x="560" y="120" />
+        <di:waypoint x="810" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="653" y="102" width="65" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0el2bha_di" bpmnElement="Flow_0el2bha">
+        <di:waypoint x="910" y="120" />
+        <di:waypoint x="982" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0sp8qi4_di" bpmnElement="Flow_0sp8qi4">
+        <di:waypoint x="510" y="178" />
+        <di:waypoint x="510" y="290" />
+        <di:waypoint x="630" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0wdbk7p_di" bpmnElement="service_task_order_pizza_online">
+        <dc:Bounds x="287" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0n1921b_di" bpmnElement="user_task_eat_pizza">
+        <dc:Bounds x="810" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0p00wfp_di" bpmnElement="end_event_pizza_finished">
+        <dc:Bounds x="982" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="980" y="145" width="42" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1trpioa_di" bpmnElement="receive_task_wait_for_pizza">
+        <dc:Bounds x="460" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="start_event_order_pizza">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="162" y="144" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qa6qp6_di" bpmnElement="user_task_call_customer_complaints">
+        <dc:Bounds x="630" y="250" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zamvxa_di" bpmnElement="receive_task_wait_for_free_pizza">
+        <dc:Bounds x="810" y="250" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1kzpvh5_di" bpmnElement="boundary_timer_event_5min">
+        <dc:Bounds x="492" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="526" y="185" width="48" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

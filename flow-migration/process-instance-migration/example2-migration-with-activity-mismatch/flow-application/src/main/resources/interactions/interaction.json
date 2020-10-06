@@ -1,0 +1,28 @@
+{
+  "key": "simple-interaction",
+  "version": 1,
+  "schemaId": "interaction-definition-schema@1",
+  "caseDefinitionKey": "case-definition",
+  "caseDefinitionVersion": 1,
+  "steps": [
+    {
+      "name": "simple-step",
+      "entryPoint": true,
+      "handlers": [
+        {
+          "name": "simple-step-handler",
+          "transitions": [
+            {
+              "condition": "errors.size() == 0",
+              "step": "done"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "done",
+      "exitPoint": true
+    }
+  ]
+}
