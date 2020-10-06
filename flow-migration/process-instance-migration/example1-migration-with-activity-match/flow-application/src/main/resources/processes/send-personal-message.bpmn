@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.1.1">
-  <bpmn:process id="send-personal-message" name="Send Personal Message" isExecutable="true" camunda:versionTag="1.0.0">
+  <bpmn:process id="send-personal-message" name="Send Personal Message" isExecutable="true" camunda:versionTag="1.1.0">
     <bpmn:startEvent id="start_event_send_message" name="Send Personal Message">
       <bpmn:extensionElements>
         <camunda:properties>
@@ -25,6 +25,7 @@
       <bpmn:outgoing>SequenceFlow_0l9ae6h</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1muaqge</bpmn:outgoing>
       <bpmn:outgoing>Flow_1oc1a7h</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0wnz11n</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_14cynn5" name="Finance" sourceRef="ExclusiveGateway_Department_Split" targetRef="user_task_message_finance">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{department=="Finance"}</bpmn:conditionExpression>
@@ -49,6 +50,7 @@
       <bpmn:incoming>SequenceFlow_0l9ae6h</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1muaqge</bpmn:incoming>
       <bpmn:incoming>Flow_1oc1a7h</bpmn:incoming>
+      <bpmn:incoming>Flow_05xtx0k</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_13kgjwo</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_13kgjwo" sourceRef="ExclusiveGateway_Department_Merge" targetRef="end_event_send_message" />
@@ -65,9 +67,30 @@
     <bpmn:sequenceFlow id="Flow_1oc1a7h" sourceRef="ExclusiveGateway_Department_Split" targetRef="ExclusiveGateway_Department_Merge">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{person=="Mary"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
+    <bpmn:userTask id="user_task_message_it" name="Create Message from IT">
+      <bpmn:incoming>Flow_0wnz11n</bpmn:incoming>
+      <bpmn:outgoing>Flow_05xtx0k</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0wnz11n" name="IT" sourceRef="ExclusiveGateway_Department_Split" targetRef="user_task_message_it">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{department=="IT"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_05xtx0k" sourceRef="user_task_message_it" targetRef="ExclusiveGateway_Department_Merge" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="send-personal-message">
+      <bpmndi:BPMNEdge id="Flow_05xtx0k_di" bpmnElement="Flow_05xtx0k">
+        <di:waypoint x="690" y="390" />
+        <di:waypoint x="820" y="390" />
+        <di:waypoint x="820" y="145" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wnz11n_di" bpmnElement="Flow_0wnz11n">
+        <di:waypoint x="470" y="145" />
+        <di:waypoint x="470" y="390" />
+        <di:waypoint x="590" y="390" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="524" y="363" width="10" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1oc1a7h_di" bpmnElement="Flow_1oc1a7h">
         <di:waypoint x="495" y="120" />
         <di:waypoint x="795" y="120" />
@@ -154,6 +177,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_1k806rr_di" bpmnElement="user_task_message_finance">
         <dc:Bounds x="590" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mw5r07_di" bpmnElement="user_task_message_it">
+        <dc:Bounds x="590" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_0fkea3f_di" bpmnElement="end_event_send_message">
         <dc:Bounds x="1012" y="102" width="36" height="36" />
