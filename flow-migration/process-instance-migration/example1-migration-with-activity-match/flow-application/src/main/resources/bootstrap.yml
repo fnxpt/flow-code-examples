@@ -1,6 +1,6 @@
 spring:
   application:
-    name: simple-flow
+    name: send-personal-message-flow
 
 server:
   port : 5600

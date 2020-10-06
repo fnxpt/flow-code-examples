@@ -3,7 +3,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://localhost:3306/simple-flow
+    url: jdbc:mysql://localhost:3306/send-personal-message-flow
     username: root
     password: root
 camunda:
@@ -27,6 +27,3 @@ migration:
   updateEventTriggers: false
   skipIoMappings: false
   skipCustomListeners: false
-
-
-
