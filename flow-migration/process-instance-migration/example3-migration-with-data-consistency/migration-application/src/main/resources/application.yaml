@@ -1,0 +1,35 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/motor-finance-application-flow
+    username: root
+    password: root
+camunda:
+  bpm:
+    admin-user:
+      id: demo
+      password: demo
+    filter:
+      create: All Tasks
+    database:
+      type: mysql
+server:
+  port: 9091
+migration:
+  sourceDefinition:
+    key: "motor-finance-application"
+    version: "1.0.0"
+  targetDefinition:
+    key: "motor-finance-application"
+    version: "2.0.0"
+  updateEventTriggers: false
+  activities:
+    - source: "user_task_approval_senior_officer"
+      target: "user_task_migration_temporary_task"
+      updateEventTrigger: false
+  skipIoMappings: false
+  skipCustomListeners: false
+  migrationIsland:
+    - user_task_migration_temporary_task
