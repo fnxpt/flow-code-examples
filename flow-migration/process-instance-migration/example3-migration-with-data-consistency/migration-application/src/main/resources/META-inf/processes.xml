@@ -1,0 +1,13 @@
+<process-engine name="default">
+    <job-acquisition>false</job-acquisition>
+    <jobExecutorActivate>false</jobExecutorActivate>
+    <configuration>org.camunda.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration</configuration>
+    <datasource>java:jdbc/ProcessEngine</datasource>
+
+    <properties>
+        <property name="history">full</property>
+        <property name="databaseSchemaUpdate">false</property>
+        <property name="authorizationEnabled">true</property>
+    </properties>
+
+</process-engine>

@@ -1,0 +1,28 @@
+{
+  "$id": "case-definition",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Case Definition",
+  "type": "object",
+  "version": 1,
+  "properties": {
+    "startedCase": {
+      "title": "Started Case",
+      "type": "boolean",
+      "description": "A flag used for testing",
+      "_flow_audit": true
+    },
+    "startedProcess": {
+      "title": "Started Case",
+      "type": "boolean",
+      "description": "A flag used for testing",
+      "_flow_audit": true
+    },
+    "completedTask": {
+      "title": "Completed Task",
+      "type": "boolean",
+      "description": "A flag used for testing",
+      "_flow_audit": true
+    }
+  },
+  "additionalProperties": false
+}
