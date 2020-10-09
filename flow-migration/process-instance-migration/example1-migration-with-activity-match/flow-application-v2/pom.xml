@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     
     <groupId>com.backbase.flow.examples</groupId>
-    <artifactId>send-personal-message-flow</artifactId>
+    <artifactId>send-personal-message-flow-v2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     
     <properties>
