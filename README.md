@@ -6,4 +6,4 @@ We have separate folders for the samples of the different Flow components:
 
 ## Flow Migration
 
-* [`process-instance-migration`](flow-migration/process-instance-migration/README.md) - Show examples for the Process Instance Migration.
+* [`process-instance-migration`](flow-migration/process-instance-migration/) - Show examples for the Process Instance Migration.
