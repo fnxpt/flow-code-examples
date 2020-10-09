@@ -1,0 +1,16 @@
+backbase:
+  flow:
+    iam:
+      local:
+        users:
+          - id: admin
+            fullName: John Walters
+            permissions:
+              - case(view) on case-definition:case-definition
+              - case(create) on case-definition:case-definition
+              - task(view) on process-definition:simple-process
+              - task(execute) on process-definition:simple-process
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
