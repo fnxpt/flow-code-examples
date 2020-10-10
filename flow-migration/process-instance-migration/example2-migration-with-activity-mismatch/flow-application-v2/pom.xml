@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     
     <groupId>com.backbase.flow.examples</groupId>
-    <artifactId>order-pizza-flow</artifactId>
+    <artifactId>order-pizza-flow-v2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     
     <properties>

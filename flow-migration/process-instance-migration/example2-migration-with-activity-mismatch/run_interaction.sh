@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in `seq 1 10`;
+for i in `seq 1 100`;
 do 
 curl --location --request POST 'http://localhost:7777/api/order-pizza-flow/api/interaction/v1/interactions/simple-interaction/actions/simple-step-handler' \
 --header 'Content-Type: application/json' \
