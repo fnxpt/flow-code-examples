@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: order-pizza-flow
+
+server:
+  port : 5600
