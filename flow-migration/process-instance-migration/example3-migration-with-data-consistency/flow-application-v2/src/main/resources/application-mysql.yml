@@ -1,0 +1,5 @@
+# This enables the use of MySQL
+
+spring.datasource.url: jdbc:mysql://${FLOW_MYSQL_HOST:localhost}:${FLOW_MYSQL_PORT:3306}/${FLOW_MYSQL_DATABASE_NAME:motor-finance-application-flow}
+spring.datasource.username: root
+spring.datasource.password: root
