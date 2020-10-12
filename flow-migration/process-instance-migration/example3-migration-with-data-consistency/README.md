@@ -168,4 +168,8 @@ Navigate to the Cockpit web application, select the processes and finally view t
 
 ![Cockpit](.images/cockpit_003.png)
 
+The Interrupting Time Boundary event will move all the tokens after one minute to the "Migrate Application Data from High to Medium Risk" service task and finally all the tokens will end up at the intended User Task with the data consistency required.
+
+![Cockpit](.images/cockpit_004.png)
+
 
