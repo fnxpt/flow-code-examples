@@ -122,25 +122,4 @@ public class MigrationPlanService {
 
     }
 
-
-    public void activateTasksInMigrationIsland() {
-
-        List<String> migrationIslandList = configuration.getMigrationIsland();
-
-        for (String userTaskId : migrationIslandList) {
-
-            List<Task> taskList =
-                    processEngine.getTaskService()
-                            .createTaskQuery()
-                            .taskDefinitionKey(userTaskId)
-                            .list();
-
-            if (taskList != null && taskList.size() > 0) {
-                for (Task task : taskList) {
-                    LOGGER.info("+++ about to complete '" + userTaskId + "' id = " + task.getId());
-                    processEngine.getTaskService().complete(task.getId());
-                }
-            }
-        }
-    }
 }

@@ -19,7 +19,6 @@ public class MigrationProperties {
     private ProcessDefinition sourceDefinition;
     private ProcessDefinition targetDefinition;
     private List<BreakingActivity> activities = new ArrayList<>();
-    private List<String> migrationIsland = new ArrayList<>();
     private boolean updateEventTriggers;
     private boolean skipIoMappings;
     private boolean skipCustomListeners;

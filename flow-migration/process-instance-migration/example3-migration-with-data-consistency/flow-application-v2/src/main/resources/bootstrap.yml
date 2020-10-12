@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: motor-finance-application
+
+server:
+  port : 5600

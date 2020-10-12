@@ -31,5 +31,4 @@ migration:
       updateEventTrigger: false
   skipIoMappings: false
   skipCustomListeners: false
-  migrationIsland:
-    - user_task_migration_temporary_task
+
